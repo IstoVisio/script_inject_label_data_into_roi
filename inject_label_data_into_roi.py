@@ -46,7 +46,7 @@ def get_tiff_path():
 	tk.WSignUp = tk.Button(root, text="Choose File!", command=browseFiles).grid(row=3, column=0) #button
 	root.mainloop()
 
-def main():
+def main(args):
 	print("Inject Label Data into ROI Plugin, by Michael Morehead")
 	print("Attempts to read a single 3D tiff, and inject it into the ROI")
 	print("---------------------------------------")
@@ -63,7 +63,6 @@ def main():
 	if len(projectList) > 1:
 		print("This script only supports 1 project at a time, please select only one project before running.")
 		doExtract = False
-
 
 	if doExtract:
 		get_roi_number()
