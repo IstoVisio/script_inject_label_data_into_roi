@@ -46,38 +46,33 @@ def get_tiff_path():
 	tk.WSignUp = tk.Button(root, text="Choose File!", command=browseFiles).grid(row=3, column=0) #button
 	root.mainloop()
 
-def main():
+def main(args):
 	print("Inject Label Data into ROI Plugin, by Michael Morehead")
 	print("Attempts to read a single 3D tiff, and inject it into the ROI")
 	print("---------------------------------------")
 	print("Usage: Highlight a project and use the Script Launcher in syGlass.")
 	print("---------------------------------------")
-	
+
+	projectList = args["selected_projects"]
+
 	doExtract = True
-	if len(sys.argv[0]) < 1:
+	if len(projectList) < 1:
 		print("Highlight a project before running to select a project!")
 		doExtract = False
 	
-	if len(sys.argv) > 1:
+	if len(projectList) > 1:
 		print("This script only supports 1 project at a time, please select only one project before running.")
 		doExtract = False
 
-
 	if doExtract:
-		syGlassProjectPath = sys.argv[0]
 		get_roi_number()
 		get_tiff_path()
 		global returnString
 		global filename
 		print("Injecting file " + filename+ " into ROI " + str(returnString))
-		project = sy.get_project(syGlassProjectPath)
+		project = projectList[0]
 		data = tifffile.imread(filename)
 		data = data[..., np.newaxis]
 		print(data.shape)
 		project.import_mask(data, int(returnString))
-
-
-
-if __name__== "__main__":
-	main() 
 
